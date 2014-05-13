@@ -4,4 +4,10 @@ complete <- function(directory, id = 1:332) {
     setwd(directory)
     df <- data.frame(id=numeric(), nobs=numeric())
     
+    for (i in id) {
+        
+    }
+    
+    setwd(wd)
+    
 }
