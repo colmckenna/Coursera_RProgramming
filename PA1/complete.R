@@ -1,7 +1,5 @@
 complete <- function(directory, id = 1:332) {
-    wd <- getwd()
-    fn <- list.files(directory)
-    setwd(directory)
+    fn <- list.files(directory, full=TRUE)
     df <- data.frame(id=numeric(), nobs=numeric())
     
     for (i in id) {
@@ -11,8 +9,5 @@ complete <- function(directory, id = 1:332) {
         df <- rbind(df,nr)
     }
     
-    setwd(wd)
-    
     df
-    
 }
