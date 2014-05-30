@@ -17,7 +17,7 @@ best <- function(state, outcome) {
     ## Return hospital name in that state with lowest 30-day death
     ## rate
     sub <- data[!data[[o]]=="Not Available", ]
-    dr <- tapply(as.numeric(sub[[o]]),sub[[7]],min)
+    dr <- tapply(as.numeric(sub[[o]]),sub$State,min)
     
     min(sub[sub[[o]]==dr[[state]] & sub$State==state, 2])
 }
