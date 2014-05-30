@@ -27,6 +27,10 @@ rankhospital <- function(state, outcome, num = "best") {
     
     ## Return hospital name in that state with the given rank
     ## 30-day death rate
-    num
+    sub <- data[!data[[o]]=="Not Available", ]
+    order(sub)
+    sub$myrank <- tapply(as.numeric(sub[[o]]),sub$State,rank, ties.method="first")
+    
+    sub[sub$myrank==num & sub$State==state, 2]
     
 }
