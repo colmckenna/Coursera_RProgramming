@@ -21,21 +21,23 @@ rankhospital <- function(state, outcome, num = "best") {
     if(num == "best"){
         num <- 1
     }
-    else{
-        num <- tapply(!data[[o]]=="Not Available",data$State,sum)[[state]]
+    
+    mv <- tapply(!data[[o]]=="Not Available",data$State,sum)[[state]]
+    
+    if (num == "worst"){
+        num <- mv
     }
+    
     
     ## Return hospital name in that state with the given rank
     ## 30-day death rate
-    sub <- data[!data[[o]]=="Not Available", ]
-    
-    ranks  <- tapply(as.numeric(sub[[o]]), sub$State ,rank, ties.method="first")
-    
-    
-    currState <- ranks[[state]]
-    
-    currState
-    
-    #sub[sub$myrank==num & sub$State==state, 2]
-    
+    if (num > mv){
+        return(NA)
+    }
+    else {
+    sub <- data[!data[[o]]=="Not Available" & data$State == state, ]
+    sub <- sub[order(sub$Hospital.Name), ]
+    sub$ranks  <- rank(as.numeric(sub[[o]]), ties.method="first")
+    sub[sub$ranks==num, 2]
+    }
 }
