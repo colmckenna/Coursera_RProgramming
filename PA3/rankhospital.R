@@ -1,6 +1,6 @@
 rankhospital <- function(state, outcome, num = "best") {
     ## Read outcome data
-    data <- read.csv("rprog-data-ProgAssignment3-data\\outcome-of-care-measures.csv", colClasses = "character")
+    data <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
     ## Check that state and outcome are valid
     if (!state %in% data$State){
         stop("invalid state")
@@ -28,9 +28,14 @@ rankhospital <- function(state, outcome, num = "best") {
     ## Return hospital name in that state with the given rank
     ## 30-day death rate
     sub <- data[!data[[o]]=="Not Available", ]
-    order(sub)
-    sub$myrank <- tapply(as.numeric(sub[[o]]),sub$State,rank, ties.method="first")
     
-    sub[sub$myrank==num & sub$State==state, 2]
+    ranks  <- tapply(as.numeric(sub[[o]]), sub$State ,rank, ties.method="first")
+    
+    
+    currState <- ranks[[state]]
+    
+    currState
+    
+    #sub[sub$myrank==num & sub$State==state, 2]
     
 }
